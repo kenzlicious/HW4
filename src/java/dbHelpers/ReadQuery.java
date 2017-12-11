@@ -96,6 +96,13 @@ public class ReadQuery {
                         table+="<td>";
                         table += devices.getModel();
                         table+="</td>";
+                        
+                        
+                        table +="<td>";
+                        table +="<a href=delete?DeviceID=" + devices.getDeviceID() + "> Delete </a>" ;
+                        
+                                table +="</td>";
+                              
                         table +="</tr>";
                         
                         
