@@ -18,5 +18,9 @@
    
     
     <%= table %>
+    
+    <a href ="add"> Add a new device</a>
+    
+    
     </body>
 </html>
