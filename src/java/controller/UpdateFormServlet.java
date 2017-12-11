@@ -1,7 +1,11 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
-import dbHelpers.AddQuery;
+import dbHelpers.ReadRecord;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -16,8 +20,8 @@ import model.Devices;
  *
  * @author mackaplan
  */
-@WebServlet(name = "AddServlet", urlPatterns = {"/addDevice"})
-public class AddServlet extends HttpServlet {
+@WebServlet(name = "UpdateFormServlet", urlPatterns = {"/update"})
+public class UpdateFormServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +40,10 @@ public class AddServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddServlet</title>");            
+            out.println("<title>Servlet UpdateFormServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateFormServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,10 +61,8 @@ public class AddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        doPost(request, response);
-        
+      doPost(request, response);
+      
     }
 
     /**
@@ -74,25 +76,21 @@ public class AddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String owner = request.getParameter("owner");
-        String brand = request.getParameter("brand");
-        String model = request.getParameter("model");
-        
-        Devices devices = new Devices();
-        devices.setOwner(owner);
-        devices.setBrand(brand);
-        devices.setModel(model);
+        int DeviceID = Integer.parseInt(request.getParameter("DeviceID"));
         
         
-        AddQuery aq = new AddQuery(); 
+        ReadRecord rr = new ReadRecord(DeviceID);
         
-        aq.doAdd(devices);
+        rr.doRead();
+        Devices devices = rr.getDevices(); 
         
-        String url="/read";
+        
+        request.setAttribute("devices", devices);
+        
+        String url = "/updateForm.jsp";
         
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward (request, response);
+        dispatcher.forward(request, response);
         
     }
 

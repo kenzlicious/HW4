@@ -1,10 +1,8 @@
 
 package controller;
 
-import dbHelpers.AddQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +14,8 @@ import model.Devices;
  *
  * @author mackaplan
  */
-@WebServlet(name = "AddServlet", urlPatterns = {"/addDevice"})
-public class AddServlet extends HttpServlet {
+@WebServlet(name = "UpdateServlet", urlPatterns = {"/updateDevice"})
+public class UpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +34,10 @@ public class AddServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddServlet</title>");            
+            out.println("<title>Servlet UpdateServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,8 +55,6 @@ public class AddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
         doPost(request, response);
         
     }
@@ -74,25 +70,25 @@ public class AddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String owner = request.getParameter("owner");
-        String brand = request.getParameter("brand");
-        String model = request.getParameter("model");
+        int DeviceID = Integer.parseInt(request.getParameter("DeviceID"));
+        String Owner = request.getParameter("Owner");
+        String Brand = request.getParameter("Brand");
+        String Model = request.getParameter("Model");
         
-        Devices devices = new Devices();
-        devices.setOwner(owner);
-        devices.setBrand(brand);
-        devices.setModel(model);
+        Devices devices = new Devices(); 
+        devices.setDeviceID(DeviceID);
+        devices.setOwner(Owner);
+        devices.setBrand(Brand);
+        devices.setModel(Model);
         
+        UpdateQuery uq = new UpdateQuery(); 
+        uq.doUpdate(devices);
         
-        AddQuery aq = new AddQuery(); 
-        
-        aq.doAdd(devices);
-        
-        String url="/read";
+        String url = "/read";
         
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward (request, response);
+        dispatcher.forward(request, response);
+        
         
     }
 

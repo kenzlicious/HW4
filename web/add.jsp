@@ -14,7 +14,7 @@
     <body>
         <h1>Add a Device</h1>
         
-        <form name="AddForm" action="addDevice" method="get">
+        <form name="addForm" action="addDevice" method="get">
            
             
             <label> Owner </label>
