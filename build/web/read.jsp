@@ -17,6 +17,6 @@
         <h1>Mackenzie's Devices</h1>
    
     
-    <%=table%>
+    <%= table %>
     </body>
 </html>
